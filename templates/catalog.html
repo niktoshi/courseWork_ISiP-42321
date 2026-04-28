@@ -1,0 +1,75 @@
+
+{% extends 'base.html' %}
+<!-- блок title задаёт заголовок вкладки браузера для этой страницы. -->
+{% block title %}Каталог — Folium{% endblock %}
+<!-- в блок content помещается основное содержимое страницы. -->
+{% block content %}
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="subpage-header"><div><h1>Каталог</h1><p>Выберите мебель для спальни, кухни, ванной, прихожей и других помещений.</p></div></section>
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block compact-top">
+  <div class="catalog-layout">
+    <aside class="filter-panel">
+      <h3>Категории</h3>
+      <div class="filter-links">
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+        <a class="filter-link {% if not current_category %}active{% endif %}" href="{% url 'catalog:catalog' %}">Все товары</a>
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+        {% for category in all_categories %}
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+          <a class="filter-link {% if current_category == category.product_category_slug %}active{% endif %}" href="{% url 'catalog:catalog' %}?category={{ category.product_category_slug }}">{{ category.product_category_name }}</a>
+        {% endfor %}
+      </div>
+    </aside>
+    <div>
+  <!-- форма отправляет данные на сервер через Django-view. -->
+      <form method="get" class="catalog-toolbar">
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+        {% if current_category %}<input type="hidden" name="category" value="{{ current_category }}">{% endif %}
+        <input class="input-control" type="text" name="q" value="{{ query }}" placeholder="Поиск по каталогу">
+        <button class="solid-btn" type="submit">Найти</button>
+      </form>
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+      <div class="breadcrumbs">{% if selected_category %}Категория: {{ selected_category.product_category_name }}{% else %}Все товары{% endif %}</div>
+      <div class="product-grid">
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+        {% for product in page_obj %}
+        <article class="product-card">
+          <a class="product-card-link" href="{{ product.get_absolute_url }}">
+            <img class="product-card-image-real" src="{{ product.image_url }}" alt="{{ product.product_name }}">
+            <div class="product-card-body">
+              <span class="chip">{{ product.product_category.product_category_name }}</span>
+              <h3>{{ product.product_name }}</h3>
+              <p>{{ product.product_description|truncatechars:90 }}</p>
+            </div>
+          </a>
+          <div class="price-row">
+            <div><strong>{{ product.product_new_price }} ₽</strong></div>
+  <!-- форма отправляет данные на сервер через Django-view. -->
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+            <form method="post" action="{% url 'cart:add' product.product_id %}">{% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.get_full_path }}">
+              <button class="solid-btn" type="submit">В корзину</button>
+            </form>
+          </div>
+        </article>
+        {% empty %}
+        <div class="empty-box">По вашему запросу ничего не найдено.</div>
+        {% endfor %}
+      </div>
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+      {% if page_obj.paginator.num_pages > 1 %}
+      <div class="inline-actions" style="margin-top:16px;">
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+        {% if page_obj.has_previous %}<a class="ghost-btn" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">Назад</a>{% endif %}
+        <span class="ghost-btn">Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+        {% if page_obj.has_next %}<a class="ghost-btn" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if current_category %}&category={{ current_category }}{% endif %}">Вперёд</a>{% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

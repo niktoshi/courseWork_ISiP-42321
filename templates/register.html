@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+<!-- блок title задаёт заголовок вкладки браузера для этой страницы. -->
+{% block title %}Регистрация — Folium{% endblock %}
+<!-- в блок content помещается основное содержимое страницы. -->
+{% block content %}
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block auth-wrap">
+  <!-- форма отправляет данные на сервер через Django-view. -->
+  <form class="auth-card" method="post">{% csrf_token %}
+    <h1>Создание аккаунта</h1>
+    {{ form.username }}
+    {{ form.email }}
+    {{ form.first_name }}
+    {{ form.last_name }}
+    {{ form.phone }}
+    {{ form.address }}
+    {{ form.password1 }}
+    {{ form.password2 }}
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+    {% if form.errors %}<p class="form-note">Проверьте форму: возможно, такой email уже занят или пароли не совпадают.</p>{% endif %}
+    <button class="solid-btn full-btn" type="submit">Зарегистрироваться</button>
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+    <div class="center-link">Уже есть аккаунт? <a href="{% url 'users:login' %}">Войти</a></div>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,53 @@
+<!-- наследуем общую разметку из base.html, чтобы не дублировать header/footer -->
+{% extends 'base.html' %}
+<!-- блок title задаёт заголовок вкладки браузера для этой страницы -->
+{% block title %}Корзина — Folium{% endblock %}
+<!-- в блок content помещается основное содержимое страницы -->
+{% block content %}
+<!-- section отделяет смысловой блок страницы для удобной стилизации -->
+<section class="subpage-header"><div><h1>Корзина</h1><p>Проверьте выбранные товары перед оформлением заказа.</p></div></section>
+<!-- section отделяет смысловой блок страницы для удобной стилизации -->
+<section class="section-block compact-top">
+  <div class="cart-layout">
+    <div class="cart-items">
+<!-- цикл перебирает список объектов, переданный из view в контексте -->
+      {% for item in items %}
+      <article class="cart-item-card">
+        <img class="cart-item-image" src="{{ item.product.image_url }}" alt="{{ item.product.product_name }}">
+        <div class="cart-item-info">
+          <a class="cart-item-title" href="{{ item.product.get_absolute_url }}">{{ item.product.product_name }}</a>
+<!-- условие показывает этот фрагмент только при выполнении проверки -->
+          <p>{{ item.product.product_material }}{% if item.product.product_color %} · {{ item.product.product_color }}{% endif %}</p>
+          <strong>{{ item.product.product_new_price }} ₽</strong>
+        </div>
+        <div class="qty-box">
+<!-- форма отправляет данные на сервер через Django-view
+тег url строит адрес по имени маршрута из urls.py -->
+          <form method="post" action="{% url 'cart:update' item.cart_item_id %}">{% csrf_token %}<input type="hidden" name="action" value="minus"><button type="submit" class="qty-btn">−</button></form>
+          <span>{{ item.quantity }}</span>
+<!-- форма отправляет данные на сервер через Django-view
+тег url строит адрес по имени маршрута из urls.py -->
+          <form method="post" action="{% url 'cart:update' item.cart_item_id %}">{% csrf_token %}<input type="hidden" name="action" value="plus"><button type="submit" class="qty-btn">+</button></form>
+        </div>
+<!-- форма отправляет данные на сервер через Django-view
+тег url строит адрес по имени маршрута из urls.py -->
+        <form method="post" action="{% url 'cart:remove' item.cart_item_id %}">{% csrf_token %}<button type="submit" class="remove-btn">Удалить</button></form>
+      </article>
+      {% empty %}
+<!-- тег url строит адрес по имени маршрута из urls.py -->
+      <div class="empty-box">Корзина пока пуста. <a href="{% url 'catalog:catalog' %}">Перейти в каталог</a></div>
+      {% endfor %}
+    </div>
+    <aside class="summary-card">
+      <h3>Итого</h3>
+      <div class="summary-row"><span>Товаров</span><strong>{{ cart.total_items|default:0 }}</strong></div>
+      <div class="summary-row total-row"><span>К оплате</span><strong>{{ cart.total_sum|default:0 }} ₽</strong></div>
+<!-- тег url строит адрес по имени маршрута из urls.py -->
+      <a class="solid-btn full-btn" href="{% url 'orders:checkout' %}">Перейти к оформлению</a>
+ <!-- форма отправляет данные на сервер через Django-view
+ тег url строит адрес по имени маршрута из urls.py -->
+      <form method="post" action="{% url 'cart:clear' %}">{% csrf_token %}<button class="ghost-btn full-btn" type="submit">Очистить корзину</button></form>
+    </aside>
+  </div>
+</section>
+{% endblock %}

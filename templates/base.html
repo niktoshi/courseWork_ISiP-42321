@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Folium{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="page-shell">
+    <div class="site-wrap">
+      <header class="topbar">
+        <a class="brand-link" href="{% url 'catalog:home' %}"><span class="brand">Folium</span></a>
+        <nav class="main-nav">
+          <a href="{% url 'catalog:about' %}">О нас</a>
+          <a href="{% url 'catalog:catalog' %}">Каталог</a>
+          <a href="{% url 'catalog:contacts' %}">Контакты</a>
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+          {% if request.user.is_authenticated %}
+            <a href="{% url 'users:profile' %}">Профиль</a>
+          {% endif %}
+        </nav>
+        <div class="topbar-actions">
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+          {% if request.user.is_authenticated %}
+  <!-- форма отправляет данные на сервер через Django-view. -->
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+            <form method="post" action="{% url 'users:logout' %}">{% csrf_token %}<button class="ghost-btn" type="submit">Выйти</button></form>
+          {% else %}
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+            <a class="ghost-btn" href="{% url 'users:login' %}">Войти</a>
+          {% endif %}
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+          <a class="cart-pill" href="{% url 'cart:detail' %}">Корзина <span>{{ cart_count }}</span></a>
+        </div>
+      </header>
+
+      <main class="site-main">
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+        {% if messages %}
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+        <section class="section-block compact-top reveal-item">
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+          {% for message in messages %}
+            <div class="form-card" style="padding:14px 18px; margin-bottom:10px;">{{ message }}</div>
+          {% endfor %}
+        </section>
+        {% endif %}
+
+<!-- в блок content помещается основное содержимое страницы. -->
+        {% block content %}{% endblock %}
+      </main>
+
+      <footer class="site-footer">
+        <div>
+          <div class="footer-brand">Folium</div>
+          <p class="footer-text">Мебель для спальни, кухни, ванной и всего дома в мягкой современной эстетике. Мы помогаем собрать уютный интерьер — от подбора модели до доставки и сборки.</p>
+        </div>
+        <div class="footer-links">
+          <a href="{% url 'catalog:catalog' %}">Каталог</a>
+          <a href="{% url 'cart:detail' %}">Корзина</a>
+          <a href="{% url 'orders:checkout' %}">Оформление</a>
+          <a href="{% url 'catalog:contacts' %}">Контакты</a>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <script src="{% static 'js/app.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

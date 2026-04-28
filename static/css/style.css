@@ -1,0 +1,694 @@
+/* Пояснение: файл отвечает за внешний вид сайта: сетки, отступы, кнопки, карточки и адаптивность. */
+/* Пояснение: CSS-переменные задают общие цвета и значения для всего интерфейса. */
+
+:root{
+  --bg:#ead6dd;
+  --surface:#f7f3f4;
+  --surface-2:#efe3e7;
+  --surface-3:#e4cfd7;
+  --header:#d7bec7;
+  --text:#5f3d45;
+  --muted:#866871;
+  --line:#e7dade;
+  --accent:#9bb694;
+  --accent-hover:#89a781;
+  --shadow:0 10px 30px rgba(95,61,69,.08);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+/* Пояснение: базовые стили body задают шрифт, фон и общие правила страницы. */
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:"Inter",Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button,input,textarea,select{font:inherit}
+
+.page-shell{
+  width:min(1220px, calc(100% - 72px));
+  margin:0 auto;
+  background:var(--surface);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+.site-wrap{min-height:100vh;display:flex;flex-direction:column}
+.site-main{flex:1 0 auto;width:100%}
+
+/* header */
+.topbar{
+  position:sticky; top:0; z-index:20;
+  display:grid; grid-template-columns:auto 1fr auto;
+  align-items:center; gap:18px;
+  padding:14px 18px;
+  background:var(--header);
+  border-bottom:1px solid rgba(95,61,69,.08);
+}
+.brand{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(40px,4.5vw,64px);
+  line-height:.9; font-weight:500; letter-spacing:-.02em;
+}
+.brand-link{display:inline-flex;align-items:center}
+.main-nav,.topbar-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.main-nav a,.ghost-btn,.cart-pill,.icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:42px;padding:10px 16px;border-radius:999px;
+  background:rgba(255,255,255,.35);color:var(--text);border:1px solid transparent;
+}
+.cart-pill span{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:24px;height:24px;margin-left:8px;border-radius:999px;
+  background:rgba(95,61,69,.1);font-size:13px;font-weight:700;
+}
+
+.section-block,.subpage-header{padding-left:18px;padding-right:18px}
+.hero-card{padding-left:18px;padding-right:0}
+.section-block{padding-top:22px;padding-bottom:18px}
+
+/* rigid hero */
+.hero-card{
+  display:grid;
+  grid-template-columns:minmax(0, 52%) minmax(0, 48%);
+  gap:18px;
+  align-items:stretch;
+  padding-top:0;
+  margin-top:0;
+}
+.hero-card > *{min-width:0}
+.hero-copy{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  padding-top:18px;
+  padding-right:4px;
+}
+.hero-copy h1{
+  margin:0 0 14px;
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(26px,4.3vw,66px);
+  line-height:.93;
+  font-weight:500;
+  max-width:10ch;
+}
+.hero-copy p{
+  margin:0 0 16px;
+  color:var(--muted);
+  font-size:clamp(13px,1.5vw,18px);
+  line-height:1.45;
+  max-width:34rem;
+}
+.hero-visual,.hero-image{
+  width:100%;
+  min-width:0;
+  align-self:start;
+}
+.hero-visual img,.hero-image img{
+  width:100%;
+  height:auto;
+  aspect-ratio: 1 / .86;
+  object-fit:cover;
+  object-position:center;
+  border-radius:0 0 0 92px;
+  margin:0;
+}
+
+/* search stays one line */
+.search-form{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 118px;
+  gap:12px;
+  align-items:center;
+  margin:0 0 14px;
+}
+.search-form input,
+.input-control,
+.field-grid input,.field-grid select,.field-grid textarea,
+textarea,.auth-card input,.profile-card input,.profile-card textarea{
+  width:100%;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--text);
+  border-radius:18px;
+  padding:14px 16px;
+  outline:none;
+}
+.solid-btn,.soft-btn,button:not(.qty-btn):not(.thumb-button),input[type="submit"]{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:52px;padding:12px 22px;border:none;border-radius:18px;
+  background:var(--accent);color:#fff;cursor:pointer;font-weight:600;
+}
+.search-form .solid-btn,.search-form button{width:100%}
+
+.tag-list{display:flex;flex-wrap:wrap;gap:8px}
+.tag-list a,.chip,.filter-link{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:34px;padding:6px 12px;border-radius:999px;
+  background:var(--surface-2);color:var(--muted);font-size:14px;white-space:nowrap;
+}
+
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:18px}
+.section-head h2,.section-block h2{
+  margin:0;font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(30px,3.4vw,48px);line-height:1;font-weight:500;
+}
+
+/* product cards */
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,340px));
+  gap:18px;
+  align-items:stretch;
+  justify-content:center;
+}
+/* Пояснение: карточка товара оформляет изображение, цену и кнопку перехода/покупки. */
+.product-card{
+  height:100%;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);
+  border-radius:26px;overflow:hidden;box-shadow:var(--shadow);min-width:0;
+}
+.product-card-link{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
+.product-card-image-real{width:100%;aspect-ratio:1/.82;object-fit:cover;background:#efdee3}
+.product-card-body{flex:1 1 auto;display:flex;flex-direction:column;gap:8px;padding:14px;min-width:0}
+.product-card h3{
+  margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-size:24px;line-height:1.05;min-height:52px;font-weight:500;
+}
+.product-card p{margin:0;color:var(--muted);line-height:1.45;min-height:42px;font-size:15px}
+.price-row{margin-top:auto;padding:0 14px 14px;display:grid;grid-template-columns:minmax(0,1fr) 132px;gap:12px;align-items:end}
+.price-row strong{display:block;font-size:24px;line-height:1.05;color:#4b3037}
+.old-price{display:block;margin-top:4px;color:#b08f97;text-decoration:line-through;font-size:13px}
+.price-row form{margin:0;width:100%}
+.price-row .solid-btn{width:100%;min-height:50px;text-align:center;line-height:1.1;padding:10px 12px;border-radius:18px}
+
+/* generic layouts */
+.catalog-layout,.form-layout.two-columns,.contact-grid.two-columns,.profile-layout.two-columns,.order-detail-grid.two-columns,.cart-layout,.product-layout{
+  display:grid;gap:22px;align-items:start
+}
+.catalog-layout{grid-template-columns:260px minmax(0,1fr)}
+.filter-panel,.summary-card,.form-card,.text-card,.profile-card,.auth-card,.product-info-panel{
+  background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow);padding:22px;
+}
+.two-columns{grid-template-columns:repeat(2,minmax(0,1fr))}
+.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:12px}
+.full-btn{width:100%}
+.auth-wrap{display:flex;justify-content:center;padding-top:34px}
+.auth-card{width:min(100%,540px)}
+
+/* homepage blocks */
+.category-mosaic,.inspiration-grid,.services-grid{display:grid;gap:18px}
+.category-mosaic{grid-template-columns:repeat(3,minmax(0,1fr))}
+.category-tile,.inspiration-card,.service-card{
+  background:#fff;border:1px solid var(--line);border-radius:28px;padding:18px;box-shadow:var(--shadow);
+}
+.category-tile{
+  min-height:180px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;gap:14px;overflow:hidden;
+}
+.category-tile h3,.category-tile .tile-title,.category-tile strong{
+  margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-size:24px;line-height:1.05;font-weight:500;max-width:100%;
+}
+.category-tile p,.category-tile .tile-text,.category-tile span{
+  margin:0;font-size:14px;line-height:1.45;color:var(--text);max-width:100%;overflow-wrap:anywhere;
+}
+.category-tile.mint{background:#d6e7d0}
+.category-tile.blush{background:#ead4dc}
+.category-tile.sage{background:#c4d7c1}
+.inspiration-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.inspiration-card img{width:100%;aspect-ratio:1/1.15;object-fit:cover;border-radius:22px}
+.delivery-card{display:grid;grid-template-columns:1fr 420px;gap:18px;align-items:stretch;background:#edd9e0;border-radius:28px;overflow:hidden}
+.delivery-text{padding:24px}
+.delivery-card img{width:100%;height:100%;object-fit:cover}
+.services-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+/* footer */
+.site-footer{
+  margin-top:auto;padding:26px 18px 28px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;
+  align-items:start;background:#d7bdc6;border-top:1px solid rgba(95,61,69,.08);
+}
+.footer-brand{font-family:"Cormorant Garamond",Georgia,serif;font-size:40px;line-height:1;margin-bottom:8px}
+
+/* tablet: keep same composition */
+/* Пояснение: медиазапросы меняют стили под разные размеры экранов. */
+@media (max-width: 980px){
+  .page-shell{width:min(1100px, calc(100% - 24px))}
+  .topbar{grid-template-columns:1fr;gap:12px;justify-items:start}
+  .main-nav,.topbar-actions{gap:8px}
+  .main-nav a,.ghost-btn,.cart-pill,.icon-btn{min-height:38px;padding:8px 14px;font-size:15px}
+  .brand{font-size:54px}
+
+  .hero-card{
+    grid-template-columns:minmax(0,52%) minmax(0,48%);
+    gap:14px;
+    padding-left:14px;
+    padding-right:14px;
+  }
+  .hero-copy h1{font-size:clamp(24px,4vw,44px)}
+  .hero-copy p{font-size:14px}
+  .hero-visual img,.hero-image img{aspect-ratio:1/.9;border-radius:0 0 0 64px}
+  .search-form{grid-template-columns:minmax(0,1fr) 104px;gap:8px}
+  .search-form input{padding:12px 13px;font-size:14px}
+  .search-form .solid-btn,.search-form button{min-height:44px;padding:10px 10px;font-size:14px}
+
+  .catalog-layout,.product-layout,.cart-layout,.delivery-card,.two-columns{grid-template-columns:1fr}
+  .site-footer{grid-template-columns:1fr}
+  .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .category-mosaic,.inspiration-grid,.services-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* phone: still same composition, only scales down */
+@media (max-width: 640px){
+  .page-shell{width:min(100%, calc(100% - 12px))}
+  .topbar{padding:12px 14px}
+  .brand{font-size:44px}
+  .main-nav a,.ghost-btn,.cart-pill,.icon-btn{min-height:34px;padding:7px 12px;font-size:14px}
+
+  .hero-card{
+    grid-template-columns:minmax(0,53%) minmax(0,47%);
+    gap:10px;
+    padding-left:12px;
+    padding-right:12px;
+  }
+  .hero-copy{padding-top:8px}
+  .hero-copy h1{font-size:clamp(18px,4.6vw,30px);margin-bottom:8px}
+  .hero-copy p{font-size:12px;line-height:1.35;margin-bottom:10px}
+  .hero-visual img,.hero-image img{aspect-ratio:1/1;border-radius:0 0 0 40px}
+  .search-form{grid-template-columns:minmax(0,1fr) 84px;gap:8px;margin-bottom:10px}
+  .search-form input{padding:10px 11px;border-radius:14px;font-size:13px}
+  .search-form .solid-btn,.search-form button{min-height:38px;border-radius:14px;font-size:13px;padding:8px 8px}
+  .tag-list{gap:6px}
+  .tag-list a,.chip,.filter-link{min-height:28px;padding:5px 9px;font-size:11px}
+
+  .product-grid,.category-mosaic,.inspiration-grid,.services-grid{grid-template-columns:1fr}
+  .product-card{max-width:420px;width:100%;margin:0 auto}
+  .field-grid{grid-template-columns:1fr}
+}
+
+/* very narrow phones */
+@media (max-width: 420px){
+  .page-shell{width:min(100%, calc(100% - 8px))}
+  .brand{font-size:38px}
+  .hero-card{
+    grid-template-columns:minmax(0,54%) minmax(0,46%);
+    gap:8px;
+    padding-left:8px;
+    padding-right:8px;
+  }
+  .hero-copy h1{font-size:clamp(15px,4.6vw,24px);max-width:none}
+  .hero-copy p{font-size:11px}
+  .hero-visual img,.hero-image img{aspect-ratio:1/1.05;border-radius:0 0 0 28px}
+  .search-form{grid-template-columns:minmax(0,1fr) 76px}
+  .search-form input{font-size:12px;padding:9px 10px}
+  .search-form .solid-btn,.search-form button{font-size:12px;min-height:34px}
+  .tag-list a,.chip,.filter-link{font-size:10px;padding:4px 8px}
+}
+
+/* ===== BUTTON SPACING + CART/FORM FIXES ===== */
+
+/* каталог: кнопки-фильтры */
+.filter-panel .filter-links,
+.filter-panel .tag-list,
+.filter-panel .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-panel .filter-links a,
+.filter-panel .tag-list a,
+.filter-panel .chips a {
+  margin: 0 !important;
+}
+
+/* поиск в каталоге */
+.search-form {
+  gap: 12px !important;
+}
+
+.search-form .solid-btn,
+.search-form button,
+.search-form input[type="submit"] {
+  margin: 0 !important;
+}
+
+/* итоги корзины */
+.summary-card .full-btn,
+.summary-card .solid-btn,
+.summary-card form + form,
+.summary-card .action-form + .action-form,
+.summary-card .full-btn + .full-btn,
+.summary-card .solid-btn + .solid-btn {
+  margin-top: 12px !important;
+}
+
+.summary-card form {
+  margin: 0;
+}
+
+.summary-card .solid-btn,
+.summary-card .full-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* кнопки количества и удаления в корзине */
+.qty-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.qty-btn {
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .18s ease, box-shadow .2s ease, background-color .2s ease;
+}
+
+.qty-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(95,61,69,.10);
+  background: var(--surface-2);
+}
+
+.qty-box .remove-btn,
+.remove-btn.solid-like {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 18px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform .18s ease, box-shadow .22s ease, background-color .22s ease;
+}
+
+.qty-box .remove-btn:hover,
+.remove-btn.solid-like:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(95,61,69,.12);
+  background: var(--accent-hover);
+}
+
+.qty-box .remove-btn {
+  margin-left: 8px;
+}
+
+/* если цена и кнопки в одной колонке */
+.cart-item-card .qty-box,
+.cart-item-card .item-actions {
+  margin-top: 10px;
+}
+
+/* мобильная адаптация */
+@media (max-width: 640px) {
+  .summary-card .solid-btn,
+  .summary-card .full-btn {
+    min-height: 48px;
+  }
+
+  .qty-box {
+    gap: 8px;
+  }
+
+  .qty-box .remove-btn {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* ===== ABOUT PAGE FIX ===== */
+/* Пояснение: этот блок отвечает только за страницу «О нас».
+   Он возвращает нормальную сетку, размеры карточек и высоту 3D-просмотра,
+   чтобы элементы не расползались по странице. */
+.about-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Пояснение: контейнер хранит все ряды страницы «О нас» и задаёт расстояние между ними. */
+.about-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+
+/* Пояснение: каждый ряд состоит из 3D-карточки и текстового блока. */
+.about-row {
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+}
+
+/* Пояснение: reverse меняет порядок колонок во втором ряду. */
+.about-row.reverse {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+}
+
+/* Пояснение: карточка вокруг 3D-модели задаёт фон, скругления и фиксированную высоту. */
+.about-model-card {
+  min-height: 320px;
+  height: 360px;
+  border-radius: 32px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Пояснение: разные классы дают карточкам мягкие оттенки, но не влияют на логику страницы. */
+.about-model-card.warm { background: #ead4dc; }
+.about-model-card.cool { background: #dbe8d6; }
+.about-model-card.soft { background: #efe3e7; }
+
+/* Пояснение: model-viewer обязательно получает размеры, иначе 3D-блок может стать почти невидимым или растянуть страницу. */
+.about-model-card model-viewer {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: transparent;
+}
+
+/* Пояснение: текстовая карточка на странице «О нас». */
+.about-text-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  padding: 26px;
+}
+
+.about-text-card h2 {
+  margin: 0 0 16px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(34px, 4vw, 58px);
+  line-height: .95;
+  font-weight: 500;
+}
+
+.about-text-card p {
+  margin: 0 0 14px;
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+/* Пояснение: отдельный класс для кнопок в блоке «О нас», чтобы они не прилипали к тексту. */
+.about-action {
+  margin-top: 6px;
+}
+
+/* Пояснение: информационная заметка под блоками с 3D-моделями. */
+.about-note {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 18px 20px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Пояснение: на планшетах и телефонах блоки страницы «О нас» становятся в одну колонку. */
+@media (max-width: 980px) {
+  .about-row,
+  .about-row.reverse {
+    grid-template-columns: 1fr;
+  }
+
+  .about-row.reverse .about-text-card {
+    order: 2;
+  }
+
+  .about-row.reverse .about-model-card {
+    order: 1;
+  }
+
+  .about-model-card {
+    height: 320px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-hero {
+    gap: 22px;
+  }
+
+  .about-showcase {
+    gap: 24px;
+  }
+
+  .about-text-card {
+    padding: 20px;
+  }
+
+  .about-text-card p {
+    font-size: 15px;
+  }
+
+  .about-model-card {
+    height: 260px;
+    min-height: 240px;
+    border-radius: 24px;
+  }
+}
+/* Общие плавные анимации для кнопок и ссылок */
+button,
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+a,
+.solid-btn,
+.ghost-btn,
+.big-btn,
+.auth-btn,
+.nav-auth,
+.btn,
+.button,
+.product-card,
+.product-card-link,
+.product-actions a,
+.product-actions button,
+.cart-actions a,
+.cart-actions button,
+.checkout-actions a,
+.checkout-actions button,
+.profile-actions a,
+.profile-actions button,
+.pagination a,
+.breadcrumbs a,
+.nav-link,
+.header-nav a,
+.footer a {
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+/* Наведение для настоящих кнопок */
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+input[type="reset"]:hover,
+.solid-btn:hover,
+.ghost-btn:hover,
+.big-btn:hover,
+.auth-btn:hover,
+.nav-auth:hover,
+.btn:hover,
+.button:hover,
+.product-actions a:hover,
+.product-actions button:hover,
+.cart-actions a:hover,
+.cart-actions button:hover,
+.checkout-actions a:hover,
+.checkout-actions button:hover,
+.profile-actions a:hover,
+.profile-actions button:hover,
+.pagination a:hover {
+    transform: translateY(-2px);
+}
+
+/* Наведение для ссылок */
+a:hover,
+.nav-link:hover,
+.header-nav a:hover,
+.footer a:hover,
+.breadcrumbs a:hover {
+    opacity: 0.75;
+}
+
+/* Наведение для карточек товаров */
+.product-card:hover,
+.product-card-link:hover {
+    transform: translateY(-4px);
+}
+
+/* Эффект нажатия */
+button:active,
+input[type="submit"]:active,
+input[type="button"]:active,
+input[type="reset"]:active,
+a:active,
+.solid-btn:active,
+.ghost-btn:active,
+.big-btn:active,
+.auth-btn:active,
+.nav-auth:active,
+.btn:active,
+.button:active,
+.product-actions a:active,
+.product-actions button:active,
+.cart-actions a:active,
+.cart-actions button:active,
+.checkout-actions a:active,
+.checkout-actions button:active,
+.profile-actions a:active,
+.profile-actions button:active,
+.pagination a:active,
+.product-card:active,
+.product-card-link:active {
+    transform: translateY(0);
+}
+
+/* Тень при наведении для основных кнопок */
+.solid-btn:hover,
+.auth-btn:hover,
+.big-btn:hover,
+.product-actions button:hover,
+.product-actions a:hover,
+.cart-actions button:hover,
+.cart-actions a:hover,
+.checkout-actions button:hover,
+.checkout-actions a:hover,
+.profile-actions button:hover,
+.profile-actions a:hover {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+}
+
+/* Тень для карточек */
+.product-card:hover {
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
+}

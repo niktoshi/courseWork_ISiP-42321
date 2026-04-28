@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+<!-- блок title задаёт заголовок вкладки браузера для этой страницы. -->
+{% block title %}Вход — Folium{% endblock %}
+<!-- в блок content помещается основное содержимое страницы. -->
+{% block content %}
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block auth-wrap">
+  <!-- форма отправляет данные на сервер через Django-view. -->
+  <form class="auth-card" method="post">{% csrf_token %}
+    <h1>Вход в аккаунт</h1>
+    {{ form.email }}
+    {{ form.password }}
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+    {% if form.non_field_errors %}<p class="form-note">{{ form.non_field_errors|striptags }}</p>{% endif %}
+    <button class="solid-btn full-btn" type="submit">Войти</button>
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+    <div class="center-link">Нет аккаунта? <a href="{% url 'users:register' %}">Зарегистрироваться</a></div>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,91 @@
+ <!-- наследуем общую разметку из base.html, чтобы не дублировать header/footer. -->
+{% extends 'base.html' %}
+{% load static %}
+
+ <!-- блок title задаёт заголовок вкладки браузера для этой страницы -->
+{% block title %}О нас — Folium{% endblock %}
+
+{% block extra_head %}
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+{% endblock %}
+
+<!-- в блок content помещается основное содержимое страницы -->
+{% block content %}
+<!-- section отделяет смысловой блок страницы для удобной стилизации -->
+<section class="section-block compact-top about-hero">
+  <div class="text-card reveal-item">
+    <h1>О нас</h1>
+    <p class="muted-text">Folium — современный магазин мебели и интерьерных решений для дома. Мы собираем коллекции, в которых сочетаются спокойная палитра, удобство в повседневной жизни и актуальный дизайн. В нашем каталоге можно подобрать мебель для спальни, гостиной, кухни, прихожей, детской и ванной комнаты, сохраняя единый стиль во всём интерьере.</p>
+  </div>
+
+  <div class="about-showcase">
+    <div class="about-row reveal-item">
+      <div class="about-model-card warm">
+        <model-viewer
+          src="{% static 'models/about/sofa.glb' %}"
+          alt="3D модель дивана"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1"
+          exposure="1"
+          environment-image="neutral"
+          poster="{% static 'images/hero.png' %}">
+        </model-viewer>
+      </div>
+      <div class="about-text-card">
+        <h2>Почему выбирают Folium?</h2>
+        <p>Мы подбираем мебель так, чтобы она была не только красивой в каталоге, но и действительно удобной в реальной жизни. Для нас важно сочетание эстетики, качества материалов и повседневного комфорта.</p>
+        <p>Каждая коллекция продумывается как часть цельного интерьера: чтобы вам было проще сочетать диваны, столы, кресла, кровати и системы хранения между собой без ощущения случайного набора предметов.</p>
+<!-- тег url строит адрес по имени маршрута из urls.py -->
+        <a class="solid-btn about-action" href="{% url 'catalog:catalog' %}">Смотреть каталог</a>
+      </div>
+    </div>
+
+    <div class="about-row reverse reveal-item">
+      <div class="about-text-card">
+        <h2>Технологичный подход к выбору мебели</h2>
+        <p>В Folium мы уделяем особое внимание тому, как мебель выглядит и ощущается в интерьере. Каждый предмет подбирается с учётом формы, материалов, цвета и деталей, чтобы он не просто выполнял свою функцию, а становился частью цельного пространства.</p>
+        <p>Мы помогаем выбирать мебель осознанно: учитывать стиль комнаты, настроение интерьера и то, насколько удобно предмет будет смотреться в повседневной жизни.</p>
+<!-- тег url строит адрес по имени маршрута из urls.py -->
+        <a class="solid-btn about-action" href="{% url 'catalog:contacts' %}">Получить консультацию</a>
+      </div>
+      <div class="about-model-card cool">
+        <model-viewer
+          src="{% static 'models/about/table.glb' %}"
+          alt="3D модель стола"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1"
+          exposure="1"
+          environment-image="neutral"
+          poster="{% static 'images/delivery.png' %}">
+        </model-viewer>
+      </div>
+    </div>
+
+    <div class="about-row reveal-item">
+      <div class="about-model-card soft">
+        <model-viewer
+          src="{% static 'models/about/chair.glb' %}"
+          alt="3D модель кресла"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1"
+          exposure="1"
+          environment-image="neutral"
+          poster="{% static 'images/inspire1.png' %}">
+        </model-viewer>
+      </div>
+      <div class="about-text-card">
+        <h2>Сервис, который сопровождает покупку</h2>
+        <p>Мы помогаем на каждом этапе: от первого знакомства с коллекцией до оформления заказа, доставки и сборки. Если нужно, подскажем, какие модели лучше сочетаются между собой, и поможем собрать интерьер в едином стиле.</p>
+        <p>Наша цель — сделать выбор мебели спокойным, понятным и приятным. Поэтому Folium объединяет удобный каталог, продуманный интерфейс, поддержку менеджеров и современную презентацию товаров.</p>
+<!-- тег url строит адрес по имени маршрута из urls.py -->
+        <a class="solid-btn about-action" href="{% url 'catalog:contacts' %}">Связаться с нами</a>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+{% endblock %}

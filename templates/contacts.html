@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+<!-- блок title задаёт заголовок вкладки браузера для этой страницы. -->
+{% block title %}Контакты — Folium{% endblock %}
+<!-- в блок content помещается основное содержимое страницы. -->
+{% block content %}
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="subpage-header"><div><h1>Контакты</h1><p>Оставьте заявку, и менеджер свяжется с вами.</p></div></section>
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block compact-top">
+  <div class="contact-grid two-columns">
+    <div class="text-card"><h1>Связь</h1><p class="muted-text">Телефон: +7 (999) 000-00-00<br>Email: hello@folium.local<br>Москва, шоурум Folium</p></div>
+  <!-- форма отправляет данные на сервер через Django-view. -->
+    <form class="form-card" method="post">{% csrf_token %}
+      <h3>Написать нам</h3>
+      <div class="field-grid"><input class="input-control" type="text" name="name" placeholder="Ваше имя" required><input class="input-control" type="email" name="email" placeholder="Email" required></div>
+      <textarea class="input-control" name="message" rows="5" placeholder="Сообщение" required></textarea>
+      <button class="solid-btn" type="submit">Отправить</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

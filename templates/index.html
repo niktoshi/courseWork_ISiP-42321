@@ -1,0 +1,123 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+<!-- блок title задаёт заголовок вкладки браузера для этой страницы. -->
+{% block title %}Folium — главная{% endblock %}
+<!-- в блок content помещается основное содержимое страницы. -->
+{% block content %}
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="hero-card">
+  <div class="hero-copy">
+    <h1>Самый большой выбор мебели для вашего дома</h1>
+    <p>Подберите мебель по комнате, стилю и цвету.</p>
+  <!-- форма отправляет данные на сервер через Django-view. -->
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+    <form action="{% url 'catalog:catalog' %}" method="get" class="search-form">
+      <input type="text" name="q" placeholder="Поиск по каталогу">
+      <button type="submit">Найти</button>
+    </form>
+    <div class="tag-list">
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+      {% for category in site_categories %}
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+      <a href="{% url 'catalog:catalog' %}?category={{ category.product_category_slug }}">{{ category.product_category_name }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="hero-visual"><img src="{% static 'images/hero.png' %}" alt="Интерьер спальни"></div>
+</section>
+
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block">
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+  <div class="section-head"><h2>Популярные товары</h2><a href="{% url 'catalog:catalog' %}">Смотреть все</a></div>
+  <div class="product-grid product-grid-home">
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+    {% for product in featured_products %}
+    <article class="product-card">
+      <a class="product-card-link" href="{{ product.get_absolute_url }}">
+        <img class="product-card-image-real" src="{{ product.image_url }}" alt="{{ product.product_name }}">
+        <div class="product-card-body">
+          <span class="chip">{{ product.product_category.product_category_name }}</span>
+          <h3>{{ product.product_name }}</h3>
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+          <p>{{ product.product_material }}{% if product.product_color %} · {{ product.product_color }}{% endif %}</p>
+        </div>
+      </a>
+      <div class="price-row">
+        <div>
+          <strong>{{ product.product_new_price }} ₽</strong>
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+          {% if product.product_old_price %}<span class="old-price">{{ product.product_old_price }} ₽</span>{% endif %}
+        </div>
+  <!-- форма отправляет данные на сервер через Django-view. -->
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+        <form method="post" action="{% url 'cart:add' product.product_id %}">{% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.path }}">
+          <button class="solid-btn" type="submit">В корзину</button>
+        </form>
+      </div>
+    </article>
+    {% empty %}
+    <div class="empty-box">Пока нет товаров. Добавь их через админ-панель.</div>
+    {% endfor %}
+  </div>
+</section>
+
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block">
+  <h2>Категории</h2>
+  <div class="category-mosaic">
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+    {% for category in categories_for_mosaic %}
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+    <a class="category-tile {% cycle 'mint wide' 'mint' 'mint' 'blush' 'blush wide' 'sage' %}" href="{% url 'catalog:catalog' %}?category={{ category.product_category_slug }}">
+      <strong>{{ category.product_category_name }}</strong>
+      <span>{{ category.product_category_description|default:'Коллекция мебели в едином стиле.' }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block">
+  <h2>Идеи для вдохновения</h2>
+  <div class="inspiration-grid">
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+    {% for item in inspiration %}
+    <article class="inspiration-card"><img src="{{ item.image }}" alt="{{ item.title }}"><div class="inspiration-caption">{{ item.title }}</div></article>
+    {% endfor %}
+  </div>
+</section>
+
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block">
+  <h2>О доставке</h2>
+  <div class="delivery-card">
+    <div class="delivery-text">
+      <h3>Доставка по всей России</h3>
+      <p>Свяжитесь с нами, чтобы узнать подробности о доставке и сборке мебели.</p>
+      <div class="delivery-actions">
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+        <a class="solid-btn" href="{% url 'catalog:contacts' %}">Связаться</a>
+        <a class="icon-btn" href="tel:+79990000000">☎</a>
+        <a class="icon-btn" href="mailto:hello@folium.local">✉</a>
+      </div>
+    </div>
+    <img src="{% static 'images/delivery.png' %}" alt="Доставка мебели">
+  </div>
+</section>
+
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block">
+  <h2>Услуги</h2>
+  <div class="services-grid">
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+    {% for service in services %}
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+    <article class="service-card {{ service.style }}"><h3>{{ service.title }}</h3><a class="soft-btn" href="{% url 'catalog:contacts' %}">{{ service.button }}</a></article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

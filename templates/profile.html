@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+<!-- блок title задаёт заголовок вкладки браузера для этой страницы. -->
+{% block title %}Профиль — Folium{% endblock %}
+<!-- в блок content помещается основное содержимое страницы. -->
+{% block content %}
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="subpage-header"><div><h1>Профиль</h1><p>Управление данными пользователя и последними заказами.</p></div></section>
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block compact-top">
+  <div class="profile-layout two-columns">
+  <!-- форма отправляет данные на сервер через Django-view. -->
+    <form class="profile-card" method="post">{% csrf_token %}
+      <h3>Личные данные</h3>
+      <div class="field-grid">
+        {{ form.username }}
+        {{ form.email }}
+        {{ form.first_name }}
+        {{ form.last_name }}
+        {{ form.phone }}
+        {{ form.address }}
+      </div>
+      <button class="solid-btn" type="submit">Сохранить</button>
+    </form>
+    <div class="summary-card">
+      <h3>Последние заказы</h3>
+      <div class="action-list">
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+      {% for order in orders %}
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+        <a class="action-row" href="{% url 'orders:detail' order.order_id %}">{{ order.order_num }} — {{ order.order_total_sum }} ₽</a>
+      {% empty %}
+        <div class="empty-box">У вас пока нет заказов.</div>
+      {% endfor %}
+      </div>
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+      <a class="ghost-btn full-btn" href="{% url 'orders:list' %}">Все заказы</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

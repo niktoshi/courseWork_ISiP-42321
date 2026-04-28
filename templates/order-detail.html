@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+<!-- блок title задаёт заголовок вкладки браузера для этой страницы. -->
+{% block title %}{{ order.order_num }} — Folium{% endblock %}
+<!-- в блок content помещается основное содержимое страницы. -->
+{% block content %}
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="subpage-header"><div><h1>Заказ {{ order.order_num }}</h1><p>Статус: {{ order.order_status }}</p></div></section>
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block compact-top">
+  <div class="order-detail-grid two-columns">
+    <div class="form-card">
+      <h3>Состав заказа</h3>
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+      {% for item in order.items.all %}
+      <div class="summary-row"><span>{{ item.product.product_name }} × {{ item.order_item_quantity }}</span><strong>{{ item.order_item_total_sum }} ₽</strong></div>
+      {% endfor %}
+      <div class="summary-row total-row"><span>Итого</span><strong>{{ order.order_total_sum }} ₽</strong></div>
+    </div>
+    <div class="summary-card">
+      <h3>Детали</h3>
+      <div class="summary-row"><span>Адрес</span><strong>{{ order.order_delivery_address }}</strong></div>
+      <div class="summary-row"><span>Оплата</span><strong>{{ order.order_payment_method }}</strong></div>
+      <div class="summary-row"><span>Дата доставки</span><strong>{{ order.order_delivery_date|default:'—' }}</strong></div>
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+      <a class="ghost-btn full-btn" href="{% url 'orders:list' %}">К списку заказов</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

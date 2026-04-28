@@ -1,0 +1,41 @@
+
+{% extends 'base.html' %}
+<!-- блок title задаёт заголовок вкладки браузера для этой страницы. -->
+{% block title %}Оформление заказа — Folium{% endblock %}
+<!-- в блок content помещается основное содержимое страницы. -->
+{% block content %}
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="subpage-header"><div><h1>Оформление заказа</h1><p>Заполните контактные данные, и мы подготовим доставку.</p></div></section>
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block compact-top">
+  <div class="form-layout two-columns">
+  <!-- форма отправляет данные на сервер через Django-view. -->
+    <form class="form-card" method="post">{% csrf_token %}
+      <h3>Контактные данные</h3>
+      <div class="field-grid">
+        {{ form.first_name }}
+        {{ form.last_name }}
+        {{ form.phone }}
+        {{ form.email }}
+      </div>
+      <div class="field-grid single-row">
+        {{ form.city }}
+        {{ form.delivery_date }}
+      </div>
+      {{ form.address }}
+      <div class="field-grid single-row">{{ form.payment_method }}</div>
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+      {% if form.errors %}<p class="form-note">Проверьте введённые данные.</p>{% endif %}
+      <button class="solid-btn" type="submit">Подтвердить заказ</button>
+    </form>
+    <div class="summary-card">
+      <h3>Ваш заказ</h3>
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+      {% for item in items %}
+      <div class="summary-row"><span>{{ item.product.product_name }} × {{ item.quantity }}</span><strong>{{ item.line_total }} ₽</strong></div>
+      {% endfor %}
+      <div class="summary-row total-row"><span>Итого</span><strong>{{ cart.total_sum }} ₽</strong></div>
+    </div>
+  </div>
+</section>
+{% endblock %}

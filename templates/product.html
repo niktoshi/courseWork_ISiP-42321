@@ -1,0 +1,50 @@
+<!-- комментарии добавлены только для чтения кода; на странице они не отображаются. -->
+<!-- наследуем общую разметку из base.html, чтобы не дублировать header/footer. -->
+{% extends 'base.html' %}
+<!-- блок title задаёт заголовок вкладки браузера для этой страницы. -->
+{% block title %}{{ product.product_name }} — Folium{% endblock %}
+<!-- в блок content помещается основное содержимое страницы. -->
+{% block content %}
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+<section class="section-block compact-top">
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+  <div class="breadcrumbs"><a href="{% url 'catalog:home' %}">Главная</a> / <a href="{% url 'catalog:catalog' %}">Каталог</a> / {{ product.product_name }}</div>
+  <div class="product-layout">
+    <div>
+      <div class="product-gallery-main"><img id="main-product-image" src="{{ product.image_url }}" alt="{{ product.product_name }}"></div>
+    </div>
+    <div class="product-info-panel">
+      <h1>{{ product.product_name }}</h1>
+      <p class="product-description">{{ product.product_description }}</p>
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+      <div class="product-price-box"><strong>{{ product.product_new_price }} ₽</strong>{% if product.product_old_price %}<span class="old-price">{{ product.product_old_price }} ₽</span>{% endif %}</div>
+      <ul class="spec-list">
+        <li><span>Категория</span><strong>{{ product.product_category.product_category_name }}</strong></li>
+        <li><span>Материал</span><strong>{{ product.product_material|default:'—' }}</strong></li>
+        <li><span>Цвет</span><strong>{{ product.product_color|default:'—' }}</strong></li>
+        <li><span>Ширина</span><strong>{{ product.product_width|default:'—' }}</strong></li>
+        <li><span>Высота</span><strong>{{ product.product_height|default:'—' }}</strong></li>
+        <li><span>Остаток</span><strong>{{ product.product_stock_quantity }}</strong></li>
+      </ul>
+      <div class="product-actions">
+  <!-- форма отправляет данные на сервер через Django-view. -->
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+        <form method="post" action="{% url 'cart:add' product.product_id %}">{% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.path }}">
+          <button class="solid-btn big-btn" type="submit">Добавить в корзину</button>
+        </form>
+    <!-- тег url строит адрес по имени маршрута из urls.py. -->
+        <a class="ghost-btn big-btn" href="{% url 'orders:checkout' %}">Купить сейчас</a>
+      </div>
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+      <div class="feature-list"><span>{% if product.product_in_stock %}В наличии{% else %}Под заказ{% endif %}</span></div>
+    </div>
+  </div>
+</section>
+    <!-- условие показывает этот фрагмент только при выполнении проверки. -->
+{% if related_products %}
+  <!-- section отделяет смысловой блок страницы для удобной стилизации. -->
+    <!-- цикл перебирает список объектов, переданный из view в контексте. -->
+<section class="section-block"><h2>Похожие товары</h2><div class="product-grid product-grid-home">{% for product in related_products %}<article class="product-card"><a class="product-card-link" href="{{ product.get_absolute_url }}"><img class="product-card-image-real" src="{{ product.image_url }}" alt="{{ product.product_name }}"><div class="product-card-body"><span class="chip">{{ product.product_category.product_category_name }}</span><h3>{{ product.product_name }}</h3></div></a></article>{% endfor %}</div></section>
+{% endif %}
+{% endblock %}
