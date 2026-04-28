@@ -1,3 +1,4 @@
+
 ## как запустить
 
 1. cd furniture_shop
@@ -32,4 +33,7 @@
 - mysqlclient
 - Pillow
 - python-dotenv
+
+=======
+# courseWork_ISiP-42321
 
