@@ -105,7 +105,12 @@ class Product(models.Model):
     def image_url(self):
         if self.product_image:
             return self.product_image.url
-        return '/static/images/hero.png'
+
+        first = self.gallery.first()
+        if first:
+            return first.product_image.url
+
+        return '/static/images/no-image.png'
 
     @property
     def material(self):

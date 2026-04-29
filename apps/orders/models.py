@@ -15,7 +15,18 @@ class Order(models.Model):
     order_total_sum = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     order_delivery_address = models.CharField(max_length=255)
     order_delivery_date = models.DateTimeField(null=True, blank=True)
-    order_payment_method = models.CharField(max_length=50)
+    
+    PAYMENT_CHOICES = [
+    ('card', 'Картой онлайн'),
+    ('cash', 'Наличными при получении'),
+    ('transfer', 'Переводом'),
+]
+
+    order_payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_CHOICES
+    )
+
     # Дата создания заполняется автоматически при первой записи объекта.
     created_at = models.DateTimeField(auto_now_add=True)
     # Дата обновления автоматически меняется при каждом сохранении объекта.

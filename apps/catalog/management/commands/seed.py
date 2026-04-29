@@ -60,6 +60,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("95.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 8,
+                "product_image": "products/demo_1.jpg",
             },
             {
                 "product_name": "Диван Liv",
@@ -74,6 +75,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("88.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 5,
+                "product_image": "products/demo_2.jpg",
             },
             {
                 "product_name": "Кресло Soft",
@@ -88,6 +90,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("95.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 10,
+                "product_image": "products/demo_3.jpg",
             },
             {
                 "product_name": "Журнальный столик Oslo",
@@ -102,6 +105,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("45.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 15,
+                "product_image": "products/demo_4.jpg",
             },
             {
                 "product_name": "ТВ-тумба Line",
@@ -116,6 +120,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("55.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 9,
+                "product_image": "products/demo_5.jpg",
             },
             {
                 "product_name": "Кровать Luna",
@@ -130,6 +135,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("110.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 5,
+                "product_image": "products/demo_6.jpg",
             },
             {
                 "product_name": "Кровать Aurelia",
@@ -144,6 +150,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("110.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 8,
+                "product_image": "products/demo_7.jpg",
             },
             {
                 "product_name": "Комод Nordi",
@@ -158,6 +165,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("85.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 12,
+                "product_image": "products/demo_8.jpg",
             },
             {
                 "product_name": "Тумба прикроватная Mila",
@@ -172,6 +180,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("50.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 20,
+                "product_image": "products/demo_9.jpg",
             },
             {
                 "product_name": "Шкаф Vesta",
@@ -186,6 +195,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("220.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 6,
+                "product_image": "products/demo_10.jpg",
             },
             {
                 "product_name": "Стол Nordic",
@@ -200,6 +210,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("75.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 12,
+                "product_image": "products/demo_11.jpg",
             },
             {
                 "product_name": "Кухня Mira",
@@ -214,6 +225,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("240.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 4,
+                "product_image": "products/demo_12.jpg",
             },
             {
                 "product_name": "Обеденный стол Terra",
@@ -228,6 +240,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("76.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 7,
+                "product_image": "products/demo_13.jpg",
             },
             {
                 "product_name": "Стул Verona",
@@ -242,6 +255,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("88.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 30,
+                "product_image": "products/demo_14.jpg",
             },
             {
                 "product_name": "Кухонный остров Prime",
@@ -256,6 +270,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("90.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 3,
+                "product_image": "products/demo_15.jpg",
             },
             {
                 "product_name": "Прихожая Vela",
@@ -270,6 +285,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("210.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 6,
+                "product_image": "products/demo_16.jpg",
             },
             {
                 "product_name": "Обувница Compact",
@@ -284,6 +300,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("105.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 18,
+                "product_image": "products/demo_17.jpg",
             },
             {
                 "product_name": "Вешалка Loft",
@@ -298,6 +315,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("35.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 22,
+                "product_image": "products/demo_18.jpg",
             },
             {
                 "product_name": "Тумба Luna",
@@ -312,6 +330,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("60.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 8,
+                "product_image": "products/demo_19.jpg",
             },
             {
                 "product_name": "Зеркало Aura",
@@ -326,6 +345,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("80.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 14,
+                "product_image": "products/demo_20.jpg",
             },
             {
                 "product_name": "Пенал Aqua",
@@ -340,6 +360,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("190.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 9,
+                "product_image": "products/demo_21.jpg",
             },
             {
                 "product_name": "Стол Nord",
@@ -354,6 +375,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("75.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 11,
+                "product_image": "products/demo_22.jpg",
             },
             {
                 "product_name": "Кресло Manager",
@@ -368,6 +390,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("120.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 16,
+                "product_image": "products/demo_23.jpg",
             },
             {
                 "product_name": "Стеллаж Bookline",
@@ -382,6 +405,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("200.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 13,
+                "product_image": "products/demo_24.jpg",
             },
             {
                 "product_name": "Кровать детская Cloud",
@@ -396,6 +420,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("80.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 9,
+                "product_image": "products/demo_25.jpg",
             },
             {
                 "product_name": "Письменный стол Junior",
@@ -410,6 +435,7 @@ class Command(BaseCommand):
                 "product_height": Decimal("75.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 12,
+                "product_image": "products/demo_26.jpg",
             },
             {
                 "product_name": "Шкаф Teddy",
@@ -424,9 +450,9 @@ class Command(BaseCommand):
                 "product_height": Decimal("190.00"),
                 "product_in_stock": True,
                 "product_stock_quantity": 7,
-            },
-        ]
-
+                "product_image": "products/demo_27.jpg",
+            }
+            ]
         created_products = []
 
         for data in products:

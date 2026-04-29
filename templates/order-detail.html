@@ -19,7 +19,7 @@
     <div class="summary-card">
       <h3>Детали</h3>
       <div class="summary-row"><span>Адрес</span><strong>{{ order.order_delivery_address }}</strong></div>
-      <div class="summary-row"><span>Оплата</span><strong>{{ order.order_payment_method }}</strong></div>
+      <div class="summary-row"><span>Оплата</span><strong>{{ order.get_order_payment_method_display }}</strong></div>
       <div class="summary-row"><span>Дата доставки</span><strong>{{ order.order_delivery_date|default:'—' }}</strong></div>
     <!-- тег url строит адрес по имени маршрута из urls.py. -->
       <a class="ghost-btn full-btn" href="{% url 'orders:list' %}">К списку заказов</a>

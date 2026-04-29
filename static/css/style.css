@@ -692,3 +692,33 @@ a:active,
 .product-card:hover {
     box-shadow: 0 16px 35px rgba(0, 0, 0, 0.12);
 }
+
+.cart-item-card img,
+.cart-item img,
+.cart-layout img {
+    width: 140px !important;
+    height: 140px !important;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+/* делаем нормальную верстку */
+.cart-item-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* текст рядом */
+.cart-item-card .item-info {
+    flex: 1;
+}
+
+.product-layout img,
+.product-detail img,
+.product-image img {
+    max-width: 800px;   /* ограничиваем ширину */
+    width: 100%;
+    margin: 0 auto;     /* центрируем */
+    border-radius: 20px;
+}
