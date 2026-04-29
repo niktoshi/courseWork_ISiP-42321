@@ -2,15 +2,16 @@
 ## как запустить
 
 1. cd furniture_shop
-2. python -m venv venv -создание виртуального окружения если его нет
-3. venv\Scripts\activate  -активация виртуального окружения
-4. pip install -r requirements.txt  -устновка зависимостей
-5. mysql -u root -p < database_schema.sql  -создание бд
-6. python manage.py makemigrations 
-7. python manage.py migrate -выполение миграций
-8. python manage.py seed -заполнение бд
-9. python manage.py createsuperuser  -создание админа
-10. python manage.py runserver  -заппуск
+2. создайте env
+3. python -m venv venv -создание виртуального окружения если его нет
+4. venv\Scripts\activate  -активация виртуального окружения
+5. pip install -r requirements.txt  -устновка зависимостей
+6. mysql -u root -p < database_schema.sql  -создание бд
+7. python manage.py makemigrations 
+8. python manage.py migrate -выполение миграций
+9. python manage.py seed -заполнение бд
+10. python manage.py createsuperuser  -создание админа
+11. python manage.py runserver  -заппуск
 
 
 ## Основные страницы
