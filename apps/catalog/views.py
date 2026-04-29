@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Product, ProductCategory
+from django.db.models.functions import Random
 
 INSPIRATION = [
     {'title': 'Светлая гостиная', 'image': '/static/images/inspire1.png'},
@@ -18,7 +19,7 @@ SERVICES = [
 
 
 def home(request):
-    featured_products = Product.objects.select_related('product_category').all()[:6]
+    featured_products = Product.objects.order_by(Random())[:6]
     return render(request, 'index.html', {
         'featured_products': featured_products,
         'inspiration': INSPIRATION,
