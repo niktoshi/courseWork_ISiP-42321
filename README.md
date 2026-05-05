@@ -13,6 +13,8 @@
 10. python manage.py createsuperuser  -создание админа
 11. python manage.py runserver  -заппуск
 
+12. или откройте  https://maintenance-wonderful-journey-cheese.trycloudflare.com/
+
 
 ## Основные страницы
 - `/` — главная
